@@ -1,0 +1,27 @@
+.task {
+  position: relative;
+}
+
+.doing {
+}
+
+.incompleted {
+  background-color: red;
+  color: white;
+}
+
+.completed {
+  background-color: green;
+  color: white;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.typeButtonGroup {
+  display: flex;
+  justify-content: flex-end;
+}
