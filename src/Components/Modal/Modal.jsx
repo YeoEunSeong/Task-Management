@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Modal.module.css';
 
-const Modal = ({ task, onEditting, selectEdittingId }) => {
+const Modal = ({ task, onEditting, selectEdittingId, isValidTime }) => {
   const [taskName, setTaskName] = useState(task.name);
   const [taskStart, setTaskStart] = useState(task.start);
   const [taskEnd, setTaskEnd] = useState(task.end);
@@ -32,14 +32,15 @@ const Modal = ({ task, onEditting, selectEdittingId }) => {
 
   const onEdit = e => {
     e.preventDefault();
-    if (taskStart > taskEnd) {
-      alert('끝나는 시간은 시작시간보다 빠를 수 없습니다.');
+
+    const { status, message } = isValidTime(task.id, taskStart, taskEnd);
+    if (status === 'ok') {
+      onEditting({ ...task, name: taskName, start: taskStart, end: taskEnd });
+    } else {
+      alert(message);
       setTaskStart(task.start);
       setTaskEnd(task.end);
-      return;
     }
-    onEditting({ ...task, name: taskName, start: taskStart, end: taskEnd });
-    return;
   };
 
   return (

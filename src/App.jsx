@@ -26,6 +26,35 @@ function App() {
       type: 'incompleted',
     },
   ]);
+  const [schedule, setSchedule] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    false,
+    true,
+    false,
+    false,
+    false,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
   const [edittingId, setEdittingId] = useState(null);
 
   const deleteTask = id => {
@@ -40,8 +69,38 @@ function App() {
   };
 
   const editTask = _task => {
+    const { start: prevStart, end: prevEnd } = tasks.find(task => task.id === _task.id);
+    const _schedule = [...schedule];
+    for (let i = prevStart; i < prevEnd; i++) {
+      _schedule[i] = false;
+    }
+
+    for (let i = _task.start; i < _task.end; i++) {
+      _schedule[i] = true;
+    }
+    setSchedule(_schedule);
     setTasks(tasks.map(task => (task.id === _task.id ? _task : task)));
     setEdittingId(null);
+  };
+
+  const isValidTime = (id, start, end) => {
+    if (start > end) {
+      return { status: 'error', message: '끝나는 시각이 시작 시각보다 빠를 수 없습니다.' };
+    }
+
+    const { start: _start, end: _end } = tasks.find(task => task.id === id);
+    const _schedule = [...schedule];
+
+    for (let i = _start; i < _end; i++) {
+      _schedule[i] = false;
+    }
+
+    for (let i = start; i < end; i++) {
+      if (_schedule[i]) {
+        return { status: 'error', message: '이미 할 일이 있는 시각입니다.' };
+      }
+    }
+    return { status: 'ok', message: '성공적으로 할 일이 추가되었습니다.' };
   };
 
   const selectEdittingId = id => {
@@ -69,6 +128,7 @@ function App() {
           key={edittingId}
           task={tasks.find(({ id }) => id === edittingId)}
           selectEdittingId={selectEdittingId}
+          isValidTime={isValidTime}
           onEditting={editTask}
         />
       )}
