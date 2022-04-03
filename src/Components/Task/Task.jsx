@@ -26,7 +26,10 @@ const Task = ({ task: { id, name, start, end, type }, mode, onChangeType, onDele
   };
 
   return (
-    <li className={`${styles.task} ${styles[type]}`} onDoubleClick={onDblClick}>
+    <li
+      className={`${styles.task} ${styles[type]} ${mode === 'normal' && styles[`height${end - start}`]}`}
+      onDoubleClick={onDblClick}
+    >
       <h3>{name}</h3>
       {mode === 'normal' && (
         <>

@@ -1,7 +1,7 @@
 import Task from '../Task/Task';
 import styles from './Tasks.module.css';
 
-const Tasks = ({ tasks, mode, selectEdittingId, deleteTask, changeType }) => {
+const Tasks = ({ tasks, mode, isValidTime, selectEdittingId, deleteTask, changeType }) => {
   return (
     <ul>
       {tasks.map(task => (

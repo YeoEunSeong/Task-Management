@@ -55,8 +55,8 @@ function App() {
     false,
     false,
   ]);
-
   const [edittingId, setEdittingId] = useState(null);
+  const [mode, setMode] = useState('read');
 
   const deleteTask = id => {
     setTasks(tasks.filter(task => task.id !== id));
@@ -89,23 +89,42 @@ function App() {
       return { status: 'error', message: '끝나는 시각이 시작 시각보다 느려야 합니다.' };
     }
 
-    const { start: _start, end: _end } = tasks.find(task => task.id === id);
     const _schedule = [...schedule];
+    if (id !== null) {
+      const { start: _start, end: _end } = tasks.find(task => task.id === id);
 
-    for (let i = _start; i < _end; i++) {
-      _schedule[i] = false;
+      for (let i = _start; i < _end; i++) {
+        _schedule[i] = false;
+      }
     }
-
     for (let i = start; i < end; i++) {
       if (_schedule[i]) {
         return { status: 'error', message: '이미 할 일이 있는 시각입니다.' };
       }
     }
+
     return { status: 'ok', message: '성공적으로 할 일이 추가되었습니다.' };
   };
 
   const selectEdittingId = id => {
     setEdittingId(id);
+  };
+
+  const toggleMode = () => {
+    setMode(mode === 'read' ? 'add' : 'read');
+  };
+
+  const addTask = (name, start, end) => {
+    const _tasks = [...tasks, { id: Date.now(), name, start, end, type: 'doing' }];
+    _tasks.sort((a, b) => a.start - b.start);
+    const _schedule = [...schedule];
+
+    for (let i = start; i < end; i++) {
+      _schedule[i] = true;
+    }
+    setSchedule(_schedule);
+    setTasks(_tasks);
+    setMode('read');
   };
 
   return (
@@ -120,18 +139,34 @@ function App() {
         changeType={changeType}
       />
 
-      <div className={styles['incompleted-tasks']}>
+      <aside className={styles['incompleted-tasks']}>
         <h2>완료하지 못한 할 일</h2>
         <Tasks tasks={tasks.filter(task => task.type === 'incompleted')} mode="readonly" />
-      </div>
+      </aside>
+
+      <button onClick={toggleMode} className={styles.add}>
+        +
+      </button>
 
       {edittingId === null || (
         <Modal
+          mode={mode}
           key={edittingId}
           task={tasks.find(({ id }) => id === edittingId)}
           selectEdittingId={selectEdittingId}
+          toggleMode={toggleMode}
           isValidTime={isValidTime}
           onEditting={editTask}
+        />
+      )}
+
+      {mode === 'add' && (
+        <Modal
+          mode={mode}
+          toggleMode={toggleMode}
+          isValidTime={isValidTime}
+          onAddTask={addTask}
+          task={{ name: '', start: 9, end: 10 }}
         />
       )}
     </>

@@ -25,3 +25,25 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.height1 {
+  height: 5rem;
+}
+.height2 {
+  height: 10rem;
+}
+.height3 {
+  height: 15rem;
+}
+.height4 {
+  height: 20rem;
+}
+.height5 {
+  height: 25rem;
+}
+.height6 {
+  height: 30rem;
+}
+.height7 {
+  height: 35rem;
+}
