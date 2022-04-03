@@ -7,22 +7,22 @@ function App() {
     {
       id: 0,
       name: 'BinDung BinDung',
-      timeStart: 9,
-      timeEnd: 10,
+      start: 9,
+      end: 10,
       type: 'doing',
     },
     {
       id: 1,
       name: 'Create new Task',
-      timeStart: 11,
-      timeEnd: 12,
+      start: 11,
+      end: 12,
       type: 'completed',
     },
     {
       id: 2,
-      name: 'Spend Perfect Day  ',
-      timeStart: 15,
-      timeEnd: 16,
+      name: 'Spend Perfect Day',
+      start: 15,
+      end: 16,
       type: 'incompleted',
     },
   ]);
@@ -65,7 +65,12 @@ function App() {
       <Tasks tasks={tasks.filter(task => task.type === 'incompleted')} mode="readonly" />
 
       {edittingId === null || (
-        <Modal key={edittingId} task={tasks.find(({ id }) => id === edittingId)} onEditting={editTask} />
+        <Modal
+          key={edittingId}
+          task={tasks.find(({ id }) => id === edittingId)}
+          selectEdittingId={selectEdittingId}
+          onEditting={editTask}
+        />
       )}
     </>
   );

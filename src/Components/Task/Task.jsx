@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Task.module.css';
 
-const Task = ({ task: { id, name, timeStart, timeEnd, type }, mode, onChangeType, onDeleteTask, selectEdittingId }) => {
+const Task = ({ task: { id, name, start, end, type }, mode, onChangeType, onDeleteTask, selectEdittingId }) => {
   const onDelete = () => {
     onDeleteTask(id);
   };
@@ -26,9 +26,14 @@ const Task = ({ task: { id, name, timeStart, timeEnd, type }, mode, onChangeType
     <li className={`${styles.task} ${styles[type]}`} onDoubleClick={onDblClick}>
       <h3>{name}</h3>
       {mode === 'normal' && (
-        <button onClick={onDelete} className={styles.deleteButton} type="button">
-          🗑️
-        </button>
+        <>
+          <time>
+            {start}~{end}
+          </time>
+          <button onClick={onDelete} className={styles.deleteButton} type="button">
+            🗑️
+          </button>
+        </>
       )}
 
       {mode === 'normal' && (
