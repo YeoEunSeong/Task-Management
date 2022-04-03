@@ -1,7 +1,14 @@
 import React from 'react';
 import styles from './Task.module.css';
 
-const Task = ({ task: { id, name, start, end, type }, mode, onChangeType, onDeleteTask, selectEdittingId }) => {
+const Task = ({
+  task: { id, name, start, end, type },
+  mode,
+  onChangeType,
+  onDeleteTask,
+  marginTop,
+  selectEdittingId,
+}) => {
   const onDelete = () => {
     onDeleteTask(id);
   };
@@ -27,7 +34,9 @@ const Task = ({ task: { id, name, start, end, type }, mode, onChangeType, onDele
 
   return (
     <li
-      className={`${styles.task} ${styles[type]} ${mode === 'normal' && styles[`height${end - start}`]}`}
+      className={`${styles.task} ${styles[type]} ${
+        mode === 'normal' && `${styles[`height${end - start}`]} ${styles[`marginTop${marginTop}`]}`
+      }`}
       onDoubleClick={onDblClick}
     >
       <h3>{name}</h3>

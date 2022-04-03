@@ -9,7 +9,7 @@ function App() {
       id: 0,
       name: 'BinDung BinDung',
       start: 9,
-      end: 10,
+      end: 11,
       type: 'doing',
     },
     {
@@ -23,7 +23,7 @@ function App() {
       id: 2,
       name: 'Spend Perfect Day',
       start: 15,
-      end: 16,
+      end: 18,
       type: 'incompleted',
     },
   ]);

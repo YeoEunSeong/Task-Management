@@ -29,21 +29,43 @@
 .height1 {
   height: 5rem;
 }
+
 .height2 {
   height: 10rem;
 }
+
 .height3 {
   height: 15rem;
 }
+
 .height4 {
   height: 20rem;
 }
+
 .height5 {
   height: 25rem;
 }
+
 .height6 {
   height: 30rem;
 }
-.height7 {
-  height: 35rem;
+
+.marginTop0 {
+  margin-top: 0;
+}
+
+.marginTop1 {
+  margin-top: 5rem;
+}
+
+.marginTop2 {
+  margin-top: 10rem;
+}
+
+.marginTop3 {
+  margin-top: 15rem;
+}
+
+.marginTop4 {
+  margin-top: 20rem;
 }
