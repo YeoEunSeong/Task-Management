@@ -14,7 +14,10 @@ const Task = ({ task: { id, name, start, end, type }, mode, onChangeType, onDele
     onChangeType(id, 'incompleted');
   };
 
-  const onDblClick = () => {
+  const onDblClick = e => {
+    if (e.target.matches('button')) {
+      return;
+    }
     if (mode === 'readonly') {
       return;
     }
