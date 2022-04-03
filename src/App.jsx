@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Tasks from './Components/Tasks/Tasks';
+import Modal from './Components/Modal/Modal';
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -25,6 +26,7 @@ function App() {
       type: 'incompleted',
     },
   ]);
+  const [edittingId, setEdittingId] = useState(null);
 
   const deleteTask = id => {
     setTasks(tasks.filter(task => task.id !== id));
@@ -37,20 +39,34 @@ function App() {
     setTasks(tasks.map(task => (task.id === id ? taskToChange : task)));
   };
 
+  const editTask = _task => {
+    setTasks(tasks.map(task => (task.id === _task.id ? _task : task)));
+    setEdittingId(null);
+  };
+
+  const selectEdittingId = id => {
+    setEdittingId(id);
+  };
+
   return (
     <>
       <h1>일정 관리 앱</h1>
       <h2>모든 할 일</h2>
-      <Tasks tasks={tasks} mode="normal" deleteTask={deleteTask} changeType={changeType} />
-
-      <h2>완료하지 못한 할 일</h2>
-
       <Tasks
-        tasks={tasks.filter(task => task.type === 'incompleted')}
-        mode="readonly"
+        tasks={tasks}
+        mode="normal"
+        selectEdittingId={selectEdittingId}
         deleteTask={deleteTask}
         changeType={changeType}
       />
+
+      <h2>완료하지 못한 할 일</h2>
+
+      <Tasks tasks={tasks.filter(task => task.type === 'incompleted')} mode="readonly" />
+
+      {edittingId === null || (
+        <Modal key={edittingId} task={tasks.find(({ id }) => id === edittingId)} onEditting={editTask} />
+      )}
     </>
   );
 }
