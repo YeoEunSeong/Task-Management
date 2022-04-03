@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './App.module.css';
 import Tasks from './Components/Tasks/Tasks';
 import Modal from './Components/Modal/Modal';
 
@@ -84,8 +85,8 @@ function App() {
   };
 
   const isValidTime = (id, start, end) => {
-    if (start > end) {
-      return { status: 'error', message: '끝나는 시각이 시작 시각보다 빠를 수 없습니다.' };
+    if (start >= end) {
+      return { status: 'error', message: '끝나는 시각이 시작 시각보다 느려야 합니다.' };
     }
 
     const { start: _start, end: _end } = tasks.find(task => task.id === id);
@@ -119,9 +120,10 @@ function App() {
         changeType={changeType}
       />
 
-      <h2>완료하지 못한 할 일</h2>
-
-      <Tasks tasks={tasks.filter(task => task.type === 'incompleted')} mode="readonly" />
+      <div className={styles['incompleted-tasks']}>
+        <h2>완료하지 못한 할 일</h2>
+        <Tasks tasks={tasks.filter(task => task.type === 'incompleted')} mode="readonly" />
+      </div>
 
       {edittingId === null || (
         <Modal
